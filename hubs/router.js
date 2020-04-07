@@ -88,6 +88,26 @@ router.put("/:id", (req, res) => {
       });
     });
 });
+// add an endpoint that returns all the messages for a hub
+router.get("/:id/messages", (req, res) => {
+  Hubs.findHubMessages(req.params.id)
+    .then((messages) => {
+      res.status(200).json(messages);
+    })
+    .catch((err) => {
+      console.log("messed up the get request for all messages in a hub", err);
+    });
+});
+// add an endpoint for adding new message to a hub
+router.post("/:id/messages", (req, res) => {
+  Hubs.addMessage(req.body)
+    .then((newMessage) => {
+      res.status(201).json(newMessage);
+    })
+    .catch((err) => {
+      console.log("messed up the post request for a new message", err);
+    });
+});
 
 module.exports = router;
 
